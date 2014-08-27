@@ -7,18 +7,24 @@
 #include "ofxSimpleGuiToo.h"
 #include "ofxGrabCam.h"
 
+#include "ofxRangeToWorld.h"
+
 #include "ofxLeapMotion.h"
+
+#define SIDEBAR_WIDTH 232
 
 class ofApp : public ofBaseApp {
 public:
-    string url;
-    ofxLeapMotion leap;
-	vector <ofxLeapMotionSimpleHand> simpleHands;
-    bool prev_grab_state;
-    int frames_grabbed_n;
-    ofPoint start_p;
 
-    ofPoint curr_p;
+    ofPoint position;
+    ofPoint rotation;
+    ofPoint target;
+    ofPoint sp; // sphercal coords posision
+
+
+
+//==============================================================================
+    string url;
 
 	void setup();
 	void update();
@@ -41,11 +47,6 @@ public:
     ofCamera camera;
     void drawCameraPose(ofxKinect *kinect,
                         ofColor color, ofMatrix4x4 transform_matrix);
-
-    ofPoint position;
-    ofPoint rotation;
-    ofPoint target;
-    ofPoint sp; // sphercal coords posision
 
     // manual calibration
     ofPoint pc; // position
@@ -70,4 +71,15 @@ public:
 	
 	// used for viewing the point cloud
 	ofEasyCam easyCam;
+
+
+// Leap Motion demo
+//==============================================================================
+ofxLeapMotion leap;
+vector <ofxLeapMotionSimpleHand> simpleHands;
+bool prev_grab_state;
+int frames_grabbed_n;
+ofPoint start_p;
+ofPoint curr_p;
+//==============================================================================
 };
