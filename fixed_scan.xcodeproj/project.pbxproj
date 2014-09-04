@@ -17,7 +17,7 @@
 		53079D1619A92BE200E63AE4 /* Update.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53079D1519A92BE200E63AE4 /* Update.cpp */; };
 		53079D1819A92BF000E63AE4 /* Draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53079D1719A92BF000E63AE4 /* Draw.cpp */; };
 		53079D1A19A92C0700E63AE4 /* Setup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53079D1919A92C0700E63AE4 /* Setup.cpp */; };
-		53079D9019AA4B1500E63AE4 /* Frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53079D8319AA4B1500E63AE4 /* Frame.cpp */; };
+		53079D9019AA4B1500E63AE4 /* DepthFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53079D8319AA4B1500E63AE4 /* DepthFrame.cpp */; };
 		53079D9119AA4B1500E63AE4 /* RangeToWorldCUDA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53079D8719AA4B1500E63AE4 /* RangeToWorldCUDA.cpp */; };
 		53079D9319AB549100E63AE4 /* RangeToWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53079D9219AB549100E63AE4 /* RangeToWorld.cpp */; };
 		53603CDF19955803002C0FE1 /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 53603CC719955803002C0FE1 /* libLeap.dylib */; };
@@ -143,8 +143,8 @@
 		53079D1C19AA4B1400E63AE4 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		53079D7F19AA4B1500E63AE4 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		53079D8019AA4B1500E63AE4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		53079D8319AA4B1500E63AE4 /* Frame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Frame.cpp; sourceTree = "<group>"; };
-		53079D8419AA4B1500E63AE4 /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
+		53079D8319AA4B1500E63AE4 /* DepthFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DepthFrame.cpp; sourceTree = "<group>"; };
+		53079D8419AA4B1500E63AE4 /* DepthFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DepthFrame.h; sourceTree = "<group>"; };
 		53079D8519AA4B1500E63AE4 /* FrameData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FrameData.h; sourceTree = "<group>"; };
 		53079D8719AA4B1500E63AE4 /* RangeToWorldCUDA.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RangeToWorldCUDA.cpp; sourceTree = "<group>"; };
 		53079D8819AA4B1500E63AE4 /* ofxRangeToWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxRangeToWorld.h; sourceTree = "<group>"; };
@@ -308,7 +308,7 @@
 		E45BE9770E8CC7DD009D7055 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		E45BE9790E8CC7DD009D7055 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
-		E4B69B5B0A3A1756003C02F2 /* kinectExampleDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = kinectExampleDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4B69B5B0A3A1756003C02F2 /* fixed_scanDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fixed_scanDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofApp.cpp; path = src/ofApp.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofApp.h; path = src/ofApp.h; sourceTree = SOURCE_ROOT; };
@@ -530,8 +530,8 @@
 			isa = PBXGroup;
 			children = (
 				53079D9519AB935B00E63AE4 /* CUDA */,
-				53079D8319AA4B1500E63AE4 /* Frame.cpp */,
-				53079D8419AA4B1500E63AE4 /* Frame.h */,
+				53079D8319AA4B1500E63AE4 /* DepthFrame.cpp */,
+				53079D8419AA4B1500E63AE4 /* DepthFrame.h */,
 				53079D8519AA4B1500E63AE4 /* FrameData.h */,
 				53079D8719AA4B1500E63AE4 /* RangeToWorldCUDA.cpp */,
 				53079D8819AA4B1500E63AE4 /* ofxRangeToWorld.h */,
@@ -1004,7 +1004,7 @@
 				E4EEC9E9138DF44700A80321 /* openFrameworks */,
 				BB4B014C10F69532006C3DED /* addons */,
 				E45BE5980E8CC70C009D7055 /* frameworks */,
-				E4B69B5B0A3A1756003C02F2 /* kinectExampleDebug.app */,
+				E4B69B5B0A3A1756003C02F2 /* fixed_scanDebug.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1085,9 +1085,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E4B69B5A0A3A1756003C02F2 /* kinectExample */ = {
+		E4B69B5A0A3A1756003C02F2 /* fixed_scan */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "kinectExample" */;
+			buildConfigurationList = E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "fixed_scan" */;
 			buildPhases = (
 				E4B69B580A3A1756003C02F2 /* Sources */,
 				E4B69B590A3A1756003C02F2 /* Frameworks */,
@@ -1099,9 +1099,9 @@
 			dependencies = (
 				E4EEB9AC138B136A00A80321 /* PBXTargetDependency */,
 			);
-			name = kinectExample;
+			name = fixed_scan;
 			productName = myOFApp;
-			productReference = E4B69B5B0A3A1756003C02F2 /* kinectExampleDebug.app */;
+			productReference = E4B69B5B0A3A1756003C02F2 /* fixed_scanDebug.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1112,7 +1112,7 @@
 			attributes = {
 				LastUpgradeCheck = 0460;
 			};
-			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "kinectExample" */;
+			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "fixed_scan" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1133,7 +1133,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				E4B69B5A0A3A1756003C02F2 /* kinectExample */,
+				E4B69B5A0A3A1756003C02F2 /* fixed_scan */,
 			);
 		};
 /* End PBXProject section */
@@ -1198,7 +1198,7 @@
 				0F8F016776681D468C0D0949 /* audio.c in Sources */,
 				53BFAA5D196F4A9800588E0F /* ofxSimpleGuiToo.cpp in Sources */,
 				53079D9119AA4B1500E63AE4 /* RangeToWorldCUDA.cpp in Sources */,
-				53079D9019AA4B1500E63AE4 /* Frame.cpp in Sources */,
+				53079D9019AA4B1500E63AE4 /* DepthFrame.cpp in Sources */,
 				53079D1819A92BF000E63AE4 /* Draw.cpp in Sources */,
 				63020F16C7E8DED980111241 /* ofxCvImage.cpp in Sources */,
 				53603CE219955803002C0FE1 /* ofxLeapMotion.cpp in Sources */,
@@ -1466,7 +1466,7 @@
 					/Users/sk/of_v0.8.3_osx_release/addons/ofxLeapMotion/libs/lib/winvs,
 					/Users/sk/of_v0.8.3_osx_release/addons/ofxRangeToWorld/examples/ofxRangeToWorldCUDA_example/all_addons/ofxKinect/libs/libusb/osx/libs,
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)Debug";
+				PRODUCT_NAME = fixed_scanDebug;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1554,7 +1554,7 @@
 					/Users/sk/of_v0.8.3_osx_release/addons/ofxLeapMotion/libs/lib/winvs,
 					/Users/sk/of_v0.8.3_osx_release/addons/ofxRangeToWorld/examples/ofxRangeToWorldCUDA_example/all_addons/ofxKinect/libs/libusb/osx/libs,
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = fixed_scan;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1562,7 +1562,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "kinectExample" */ = {
+		E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "fixed_scan" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E4B69B4E0A3A1720003C02F2 /* Debug */,
@@ -1571,7 +1571,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "kinectExample" */ = {
+		E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "fixed_scan" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E4B69B600A3A1757003C02F2 /* Debug */,

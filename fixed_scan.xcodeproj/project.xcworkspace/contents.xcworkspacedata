@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:kinectExample.xcodeproj">
+      location = "self:fixed_scan.xcodeproj">
    </FileRef>
 </Workspace>

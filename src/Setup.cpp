@@ -8,13 +8,22 @@
 
 #include "ofApp.h"
 
-
 //--------------------------------------------------------------
 void ofApp::setup() {
 
+#ifdef LEAP_DEMO
 	leap.open();
-
+#endif
     //    ofSetLogLevel(OF_LOG_VERBOSE);
+
+    colors.push_back(ofColor::red);
+    colors.push_back(ofColor::green);
+    colors.push_back(ofColor::blue);
+    colors.push_back(ofColor::darkRed);
+    colors.push_back(ofColor::violet);
+    colors.push_back(ofColor::darkGreen);
+    colors.push_back(ofColor::darkBlue);
+
 
     kinect.setRegistration(true);
     kinect.init();
@@ -36,69 +45,85 @@ void ofApp::setup() {
 
 	ofSetFrameRate(60);
 
-	// zero the tilt on startup
-	angle = 0;
-	kinect.setCameraTiltAngle(angle);
-
 	// start from the front
 	bDrawPointCloud = true;
 
     target.set(0.0f, 0.0f, 0.0f);
 
     gui.addTitle("target");
-	gui.addSlider("target_x", target.x, -0.700, 0.700);
-	gui.addSlider("target_y", target.y, -0.700, 0.700);
-//    gui.addSlider("target_z", target.z, -0.300, 0.300);
+	gui.addSlider("target_x", target.x, -1.0f, 1.0f);
+	gui.addSlider("target_y", target.z, -1.0f, 1.0f);
+    target.y = 0.0f;
 
     gui.addTitle("spherical");
-	gui.addSlider("h", sp.x, 0, 1.0f);
-    gui.addSlider("r", sp.y, -0.5f, 1.0f);
-    gui.addSlider("angle", sp.z, -180, 180);
-    gui.addSlider("tilt", camera_tilt, -90, 90);
+    gui.addTitle("height");
+	gui.addSlider("1", sp.x, -0.5f, 1.0f);
+    gui.addTitle("radius");
+    gui.addSlider("2", sp.y, 0.0f, 1.0f);
+    gui.addTitle("angle");
+    gui.addSlider("3", sp.z, -180, 180);
+    gui.addTitle("tilt");
+    gui.addSlider("4", camera_tilt, -180, 180);
 
+    gui.addTitle("step");
+    gui.addSlider("data_step", data_step, 1, 4);
+    gui.addSlider("vis_step", vis_step, 1, 4);
 
-//	gui.addTitle("postition");
-//	gui.addSlider("postition_x", position.x, -0.700, 0.700);
-//	gui.addSlider("postition_y", position.z, -0.700, 0.700);
-//    gui.addSlider("postition_z", position.y, -0.700, 0.700);
-//
-//	gui.addTitle("rotation");
-//	gui.addSlider("rotation_z1", rotation.x, -180, 180);
-//	gui.addSlider("rotation_y", rotation.y, -180, 180);
-//    gui.addSlider("rotation_z2", rotation.z, -180, 180);
+    gui.addTitle("capture");
+    gui.addToggle("show_normals", show_normals);
+    gui.addSlider("weight_a", weight_a, 0.0f, 1.0f);
 
-
-//    gui.addTitle("calibration");
-//	gui.addSlider("x", pc.x, -0.05f, 0.05);
-//    gui.addSlider("y", pc.y, -0.05f, 0.05);
-//    gui.addSlider("z", pc.z, -0.05f, 0.05);
-//
-//	gui.addSlider("a", rc.x, -10, 10);
-//    gui.addSlider("b", rc.y, -10, 10);
-//    gui.addSlider("c", rc.z, -10, 10);
-
+    gui.addTitle("calibration");
+    gui.addButton("add_floor_map", add_floor_map);
+    gui.addSlider("floor_y", floor_y, -1.0f, 1.0f);
+    gui.addSlider("floor_range", floor_range, 0.1f, 1.0f);
 
     gui.setAlignRight(false);
     gui.loadFromXML();
 	gui.show();
     gui.setDefaultKeys(true);
 
+    gui.setAutoSave(true);
+
     min.set(-0.5, 0, -0.5);
 	max.set(0.5, 1, 0.5);
 
-    //ofSetCoordHandedness(OF_LEFT_HANDED);
 
 	grab_cam = new ofxGrabCam(false);
 	grab_cam->reset();
 	grab_cam->setPosition(1.7, 1.5, 1.5);
 	grab_cam->lookAt(ofVec3f(0.0f, 0.0f, 0.0f));
 
+#ifdef LEAP_DEMO
     prev_grab_state = false;
     frames_grabbed_n = 0;
     start_p.set(0.0f, 0.0f, 0.0f);
-
     curr_p.set(0,0,150);
+#endif
 
     //    string url = "http://localhost:5000/run?";
     url = "http://asimov.dhcp.lan.london.hackspace.org.uk:5000/run?";
+
+    curr_f.init(kinect.getWidth(), kinect.getHeight());
+    avg_f.init(kinect.getWidth(), kinect.getHeight());
+
+    curr_f.allocateHost();
+    avg_f.allocateHost();
+
+    if (kinect.isConnected()) {
+        c_o.ref_pix_size = kinect.getZeroPlanePixelSize();
+        c_o.ref_distance = kinect.getZeroPlaneDistance();
+        c_o.x_resolution = kinect.getWidth();
+        c_o.y_resolution = kinect.getHeight();
+    }
+    c_o.min[0] = -10.0f;
+    c_o.min[1] = -10.0f;
+    c_o.min[2] = -10.0f;
+    c_o.max[0] = 10.0f;
+    c_o.max[1] = 10.0f;
+    c_o.max[2] = 10.0f;
+
+    capture_frames = false;
+    save_i = 0;
+    frame_i = 0;
 }

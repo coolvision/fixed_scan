@@ -6,37 +6,71 @@
 
 #include "ofxSimpleGuiToo.h"
 #include "ofxGrabCam.h"
-
+//#include "ofxLeapMotion.h"
 #include "ofxRangeToWorld.h"
 
-#include "ofxLeapMotion.h"
 
 #define SIDEBAR_WIDTH 232
 
 class ofApp : public ofBaseApp {
 public:
 
+// camera position
+//==============================================================================
+    // set from the ui
+    ofPoint target; // only x, y
+    ofPoint sp; // sphercal coords posision
+    float camera_tilt;
+
+    // computed to point the camera onto the target
     ofPoint position;
     ofPoint rotation;
-    ofPoint target;
-    ofPoint sp; // sphercal coords posision
 
+// saved data
+//==============================================================================
 
+    CameraOptions c_o;
+
+    int data_step; // step for points conversion
+    int vis_step; // step for the mesh & drawing
+
+    DepthFrame avg_f; // current averaged
+
+    bool capture_frames;
+    int frame_i;
+    int save_i;
+    float weight_a;
+    bool show_normals;
+
+// calibration
+//==============================================================================
+    vector<DepthFrame *> saved_f; // snapshots (averaged)
+    vector<DepthFrame *> floor_maps; // corresponding "floor maps" for calibration
+    void addFloorMap(DepthFrame *f);
+    void drawFloorMaps();
+    bool add_floor_map;
+    float floor_y;
+    float floor_range;
+
+    void clearFloorMaps();
+    void findCorrespondence(); // between saved snapshots, using "floor maps"
 
 //==============================================================================
     string url;
+
+    vector<ofColor> colors;
 
 	void setup();
 	void update();
 	void draw();
 	void exit();
 
-    bool save_points;
-    vector<ofCamera *> camera_positions;
-    vector<ofMesh *> meshes;
-	void drawPointCloud();
-    void savePoints();
-    void drawCurrPointCloud();
+//    bool save_points;
+//    vector<ofCamera *> camera_positions;
+//    vector<ofMesh *> meshes;
+//	void drawPointCloud();
+//    void savePoints();
+//    void drawCurrPointCloud();
 
 	void keyPressed(int key);
 	void mouseDragged(int x, int y, int button);
@@ -45,8 +79,9 @@ public:
 	void windowResized(int w, int h);
 
     ofCamera camera;
-    void drawCameraPose(ofxKinect *kinect,
-                        ofColor color, ofMatrix4x4 transform_matrix);
+    ofCamera set_kinect;
+//    void drawCameraPose(ofxKinect *kinect,
+//                        ofColor color, ofMatrix4x4 transform_matrix);
 
     // manual calibration
     ofPoint pc; // position
@@ -75,11 +110,11 @@ public:
 
 // Leap Motion demo
 //==============================================================================
-ofxLeapMotion leap;
-vector <ofxLeapMotionSimpleHand> simpleHands;
-bool prev_grab_state;
-int frames_grabbed_n;
-ofPoint start_p;
-ofPoint curr_p;
+//ofxLeapMotion leap;
+//vector <ofxLeapMotionSimpleHand> simpleHands;
+//bool prev_grab_state;
+//int frames_grabbed_n;
+//ofPoint start_p;
+//ofPoint curr_p;
 //==============================================================================
 };

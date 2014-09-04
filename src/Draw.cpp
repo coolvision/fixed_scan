@@ -15,23 +15,26 @@ void ofApp::draw() {
     ofViewport(SIDEBAR_WIDTH, 0, ofGetWindowWidth() - SIDEBAR_WIDTH,
                ofGetWindowHeight());
     grab_cam->begin();
+//==============================================================================
 
-    ofDrawAxis(500);
-    ofDrawGrid(1.0f, 8.0f, false, false, true, false);
-    drawVolume();
 
     // compute absolute position and rotation
     position.y = sp.x;
     position.x = sp.y;
     position.z = 0;
     position.rotate(sp.z, ofPoint(0.0f, 1.0f, 0.0f));
+    // setting relative to the target
     position += target;
 
-    rotation.x = sp.z;  // MAY BE INCORRECT
-    rotation.y = 90 + atan(sp.y / sp.x) * RAD_TO_DEG;
+    // set camera to point to the target
+    rotation.x = sp.z;
+    //rotation.y = 90 + atan(sp.y / sp.x) * RAD_TO_DEG;
+    rotation.y = camera_tilt;
     rotation.z = 0.0f;
 
 
+    // set the camera position
+    // in the same way as the arm position is set
     camera.resetTransform();
     camera.pan(rotation.x);
     camera.roll(-rotation.y);
@@ -39,35 +42,72 @@ void ofApp::draw() {
     camera.move(position.x, position.y, position.z);
 
 
+    // draw camera and target position
+    ofDrawAxis(500);
+    ofDrawGrid(1.0f, 8.0f, false, false, true, false);
+    drawVolume();
     ofSetColor(ofColor::white);
     ofDrawSphere(target, 0.005f);
     ofLine(position, target);
-
-
-
-
+    // and camera rotation
     camera.transformGL();
     ofSetColor(ofColor::black);
     ofDrawBox(0.1);
 	ofDrawAxis(0.2);
 	camera.restoreTransformGL();
 
-    drawPointCloud();
+    // kinect is rotated relative to the arm direction
+    // so rotate the camera to make it the same as kinect direction
+    set_kinect = camera;
+    set_kinect.pan(90.0f);
 
+//    curr_f.setFromPixels(kinect.getDistancePixels());
+//    curr_f.setImage(kinect.getPixels());
+//    curr_f.vis_step = vis_step;
+//    curr_f.data.step = data_step;
 
-    camera.roll(-90.0f); // MAY BE INCORRECT
-    camera.tilt(-90.0f);
-    if (save_points) {
-        savePoints();
-        save_points = false;
+    avg_f.vis_step = vis_step;
+    avg_f.data.step = data_step;
+
+    // fill in the camera option
+    if (kinect.isConnected()) {
+        memcpy(c_o.t, set_kinect.getGlobalTransformMatrix().getPtr(),
+               16 * sizeof(float));
     }
 
+    //rangeToWorld(&c_o, &curr_f, true);
+    //curr_f.meshFromPoints(true);
+    //curr_f.drawMesh();
 
-    camera.transformGL();
-    drawCurrPointCloud();
-	camera.restoreTransformGL();
+
+    if (capture_frames) {
+        if (frame_i == 0) {
+            cout << "avg_f.setFromPixels" << endl;
+            avg_f.setFromPixels(kinect.getDistancePixels());
+            avg_f.setImage(kinect.getPixels());
+        } else {
+            cout << "updateWeightedDepth" << endl;
+            avg_f.updateWeightedDepth(kinect.getDistancePixels(), weight_a);
+            avg_f.updateWeightedImage(kinect.getPixels(), weight_a);
+        }
+        rangeToWorld(&c_o, &avg_f, true);
+        avg_f.meshFromPoints(show_normals);
+
+        frame_i++;
+    }
+    avg_f.drawMesh();
 
 
+    // now, make a "floor map"
+    if (add_floor_map) {
+        addFloorMap(&avg_f);
+        add_floor_map = false;
+    }
+    drawFloorMaps();
+
+
+
+//==============================================================================
     grab_cam->end();
 
 	ofViewport(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
@@ -78,56 +118,6 @@ void ofApp::draw() {
     ofSetColor(ofColor::gray);
     ofRect(0, 0, SIDEBAR_WIDTH, ofGetWindowHeight());
     gui.draw();
-}
-
-void ofApp::drawPointCloud() {
-
-	int w = 640;
-	int h = 480;
-
-	glPointSize(3);
-	ofPushMatrix();
-	ofEnableDepthTest();
-
-    for (int i = 0; i < meshes.size(); i++) {
-        camera_positions[i]->transformGL();
-        meshes[i]->drawVertices();
-        camera_positions[i]->restoreTransformGL();
-    }
-
-	ofDisableDepthTest();
-	ofPopMatrix();
-}
-
-void ofApp::drawCurrPointCloud() {
-
-	int w = 640;
-	int h = 480;
-	ofMesh mesh;
-	mesh.setMode(OF_PRIMITIVE_POINTS);
-	int step = 2;
-	for(int y = 0; y < h; y += step) {
-		for(int x = 0; x < w; x += step) {
-			if(kinect.getDistanceAt(x, y) > 0) {
-				mesh.addColor(kinect.getColorAt(x,y));
-                ofPoint p = kinect.getWorldCoordinateAt(x, y);
-                p /= 1000.0f;
-
-                ofPoint world_p;
-                world_p.set(p.z, p.y, -p.x);
-				mesh.addVertex(world_p);
-			}
-		}
-	}
-	glPointSize(3);
-	ofPushMatrix();
-	// the projected points are 'upside down' and 'backwards'
-	//ofScale(1, -1, -1);
-	//ofTranslate(0, 0, -1000); // center the points a bit
-	ofEnableDepthTest();
-	mesh.drawVertices();
-	ofDisableDepthTest();
-	ofPopMatrix();
 }
 
 void ofApp::drawVolume() {
@@ -162,55 +152,4 @@ void ofApp::drawVolume() {
 	for (int i = 0; i < 4; i++) {
 		ofLine(near_v[i], far_v[i]);
 	}
-}
-
-void ofApp::drawCameraPose(ofxKinect *kinect,
-                           ofColor color, ofMatrix4x4 transform_matrix) {
-
-	ofPoint near[4];
-	ofPoint far[4];
-	ofPoint camera_near[4];
-	ofPoint camera_far[4];
-	ofPoint world_near[4];
-	ofPoint world_far[4];
-
-	int width = kinect->getDepthPixelsRef().getWidth();
-	int height = kinect->getDepthPixelsRef().getHeight();
-
-	// so, there are some points for display of the camera pose
-	near[0].set(0, 0, 0.0f);
-	near[1].set(0, height, 0.0f);
-	near[2].set(width, height, 0.0f);
-	near[3].set(width, 0, 0.0f);
-	far[0].set(0, 0, -1500);
-	far[1].set(0, height, -1500);
-	far[2].set(width, height, -1500);
-	far[3].set(width, 0, -1500);
-
-	// first, transform some points into camera coordinates
-	for (int i = 0; i < 4; i++) {
-		camera_near[i] =
-        kinect->getWorldCoordinateAt(near[i].x, near[i].y, near[i].z);
-		camera_far[i] =
-        kinect->getWorldCoordinateAt(far[i].x, far[i].y, far[i].z);
-
-		camera_near[i] /= 1000.0;
-		camera_far[i] /= 1000.0;
-	}
-
-	ofSetLineWidth(1.0);
-
-	// now transform this points
-	for (int i = 0; i < 4; i++) {
-		world_near[i] = camera_near[i] * transform_matrix;
-		world_far[i] = camera_far[i] * transform_matrix;
-	}
-	ofSetColor(color);
-	for (int i = 0; i < 4; i++) {
-		ofLine(world_near[i], world_far[i]);
-	}
-	ofLine(world_far[0], world_far[1]);
-	ofLine(world_far[1], world_far[2]);
-	ofLine(world_far[2], world_far[3]);
-	ofLine(world_far[3], world_far[0]);
 }
