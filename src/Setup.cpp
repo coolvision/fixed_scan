@@ -75,8 +75,18 @@ void ofApp::setup() {
 
     gui.addTitle("calibration");
     gui.addButton("add_floor_map", add_floor_map);
+    gui.addButton("clear", clear_floor_maps);
+    gui.addToggle("draw_correspondence", draw_correspondence);
     gui.addSlider("floor_y", floor_y, -1.0f, 1.0f);
     gui.addSlider("floor_range", floor_range, 0.1f, 1.0f);
+
+    gui.addTitle("parameters");
+	gui.addSlider("pc_x", pc.x, -0.1f, 0.1f);
+    gui.addSlider("pc_y", pc.y, -0.1f, 0.1f);
+	gui.addSlider("pc_z", pc.z, -0.1f, 0.1f);
+	gui.addSlider("rc_x", rc.x, -30.0f, 30.0f);
+    gui.addSlider("rc_y", rc.y, -30.0f, 30.0f);
+	gui.addSlider("rc_z", rc.z, -30.0f, 30.0f);
 
     gui.setAlignRight(false);
     gui.loadFromXML();
@@ -104,10 +114,10 @@ void ofApp::setup() {
     //    string url = "http://localhost:5000/run?";
     url = "http://asimov.dhcp.lan.london.hackspace.org.uk:5000/run?";
 
-    curr_f.init(kinect.getWidth(), kinect.getHeight());
+    //curr_f.init(kinect.getWidth(), kinect.getHeight());
     avg_f.init(kinect.getWidth(), kinect.getHeight());
 
-    curr_f.allocateHost();
+    //curr_f.allocateHost();
     avg_f.allocateHost();
 
     if (kinect.isConnected()) {

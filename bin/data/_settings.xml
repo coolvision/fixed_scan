@@ -9,19 +9,19 @@
     </SliderFloat_target_y>
     <SliderFloat_1>
         <name>1</name>
-        <value>1.000000000</value>
+        <value>0.909999967</value>
     </SliderFloat_1>
     <SliderFloat_2>
         <name>2</name>
-        <value>0.070000000</value>
+        <value>0.100000001</value>
     </SliderFloat_2>
     <SliderFloat_3>
         <name>3</name>
-        <value>-111.599998474</value>
+        <value>5.399993896</value>
     </SliderFloat_3>
     <SliderFloat_4>
         <name>4</name>
-        <value>-32.399993896</value>
+        <value>-99.000000000</value>
     </SliderFloat_4>
     <SliderInt_data_step>
         <name>data_step</name>
@@ -29,7 +29,7 @@
     </SliderInt_data_step>
     <SliderInt_vis_step>
         <name>vis_step</name>
-        <value>1</value>
+        <value>2</value>
     </SliderInt_vis_step>
     <Toggle_show_normals>
         <name>show_normals</name>
@@ -43,6 +43,14 @@
         <name>add_floor_map</name>
         <value>0</value>
     </Button_add_floor_map>
+    <Button_clear>
+        <name>clear</name>
+        <value>0</value>
+    </Button_clear>
+    <Toggle_draw_correspondence>
+        <name>draw_correspondence</name>
+        <value>1</value>
+    </Toggle_draw_correspondence>
     <SliderFloat_floor_y>
         <name>floor_y</name>
         <value>0.000000000</value>

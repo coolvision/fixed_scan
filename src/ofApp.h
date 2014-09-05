@@ -49,13 +49,23 @@ public:
     void addFloorMap(DepthFrame *f);
     void drawFloorMaps();
     bool add_floor_map;
+    bool clear_floor_maps;
+    bool draw_correspondence;
     float floor_y;
     float floor_range;
 
     void clearFloorMaps();
+    void drawCorrespondence();
     void findCorrespondence(); // between saved snapshots, using "floor maps"
 
+    // manual calibration
+    ofPoint pc; // position
+    ofPoint rc; // rotation
+
+    // calibrated camera position
+    ofCamera fixed_cam;
 //==============================================================================
+
     string url;
 
     vector<ofColor> colors;
@@ -65,13 +75,6 @@ public:
 	void draw();
 	void exit();
 
-//    bool save_points;
-//    vector<ofCamera *> camera_positions;
-//    vector<ofMesh *> meshes;
-//	void drawPointCloud();
-//    void savePoints();
-//    void drawCurrPointCloud();
-
 	void keyPressed(int key);
 	void mouseDragged(int x, int y, int button);
 	void mousePressed(int x, int y, int button);
@@ -80,12 +83,6 @@ public:
 
     ofCamera camera;
     ofCamera set_kinect;
-//    void drawCameraPose(ofxKinect *kinect,
-//                        ofColor color, ofMatrix4x4 transform_matrix);
-
-    // manual calibration
-    ofPoint pc; // position
-    ofPoint rc; // rotation
 
 
     void drawVolume();

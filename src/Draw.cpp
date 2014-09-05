@@ -93,6 +93,9 @@ void ofApp::draw() {
         rangeToWorld(&c_o, &avg_f, true);
         avg_f.meshFromPoints(show_normals);
 
+        // save the camera position
+        avg_f.c = c_o;
+
         frame_i++;
     }
     avg_f.drawMesh();
@@ -104,6 +107,14 @@ void ofApp::draw() {
         add_floor_map = false;
     }
     drawFloorMaps();
+
+    if (clear_floor_maps) {
+        clearFloorMaps();
+        clear_floor_maps = false;
+    }
+    if (draw_correspondence) {
+        drawCorrespondence();
+    }
 
 
 

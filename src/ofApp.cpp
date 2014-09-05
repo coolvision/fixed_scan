@@ -1,6 +1,76 @@
 #include "ofApp.h"
 
+void ofApp::clearFloorMaps() {
+
+    for (int i = 0; i < floor_maps.size(); i++) {
+        floor_maps[i]->releaseHost();
+        delete floor_maps[i];
+    }
+    floor_maps.clear();
+
+    for (int i = 0; i < saved_f.size(); i++) {
+        saved_f[i]->releaseHost();
+        delete saved_f[i];
+    }
+    saved_f.clear();
+}
+
+void ofApp::drawCorrespondence() {
+
+    if (floor_maps.empty()) {
+        return;
+    }
+    DepthFrame *m = floor_maps.back();
+
+    ofPoint offset = target - ofPoint(0.5f, 0.5f, 0.5f);
+    ofPoint p;
+    ofPoint p2;
+    for (int y = 0; y < m->data.height; y++) {
+		for (int x = 0; x < m->data.width; x++) {
+
+            bool found_undefined = false;
+
+            for (int i = 0; i < floor_maps.size(); i++) {
+                FrameData *d = &floor_maps[i]->data;
+
+                p.y = d->depth[y * d->width + x];
+
+                if (p.y == -FLT_MAX) {
+                    found_undefined = true;
+                    break;
+                }
+                if (found_undefined) {
+                    break;
+                }
+            }
+
+            if (found_undefined) {
+                continue;
+            }
+
+            // all values are present
+            p.x = x * 0.005 + offset.x;
+            p.z = y * 0.005 + offset.z;
+
+            p2 = p;
+
+            ofSetColor(ofColor::white);
+            for (int i = 0; i < floor_maps.size()-1; i++) {
+                FrameData *d = &floor_maps[i]->data;
+                p2.y = d->depth[y * d->width + x];
+                ofLine(p, p2);
+            }
+
+
+        }
+    }
+}
+
 void ofApp::addFloorMap(DepthFrame *f) {
+
+    saved_f.push_back(new DepthFrame());
+    DepthFrame *s = saved_f.back();
+    s->cloneFrom(f);
 
     floor_maps.push_back(new DepthFrame());
     DepthFrame *m = floor_maps.back();
@@ -58,23 +128,6 @@ void ofApp::addFloorMap(DepthFrame *f) {
         color = ofColor::white;
     }
     ofPoint normal(0.0f, 1.0f, 0.0f);
-//    mesh.setMode(OF_PRIMITIVE_POINTS);
-//    for (int i = 0; i < f->data.height-step; i += step) {
-//		for (int j = 0; j < f->data.width-step; j += step) {
-//
-//            p.x = j * 0.005 + offset.x;
-//            p.z = i * 0.005 + offset.z;
-//            p.y = m->data.depth[i * f->data.width + j];
-//
-//            if (p.y == -FLT_MAX) {
-//                continue;
-//            }
-//
-//            mesh.addVertex(p);
-//			mesh.addColor(color);
-//        }
-//    }
-
 
 	mesh.setMode(OF_PRIMITIVE_TRIANGLES);
     step = 1;
@@ -127,9 +180,12 @@ void ofApp::addFloorMap(DepthFrame *f) {
 void ofApp::drawFloorMaps() {
     for (int i = 0; i < floor_maps.size(); i++) {
         DepthFrame *m = floor_maps[i];
-        // can just draw a mesh
-        m->mesh.drawVertices();
         m->mesh.drawWireframe();
+    }
+
+    for (int i = 0; i < saved_f.size(); i++) {
+        DepthFrame *m = saved_f[i];
+        m->mesh.drawFaces();
     }
 }
 
