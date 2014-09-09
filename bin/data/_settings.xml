@@ -9,19 +9,19 @@
     </SliderFloat_target_y>
     <SliderFloat_1>
         <name>1</name>
-        <value>0.909999967</value>
+        <value>0.992500067</value>
     </SliderFloat_1>
     <SliderFloat_2>
         <name>2</name>
-        <value>0.100000001</value>
+        <value>0.395000011</value>
     </SliderFloat_2>
     <SliderFloat_3>
         <name>3</name>
-        <value>5.399993896</value>
+        <value>48.599990845</value>
     </SliderFloat_3>
     <SliderFloat_4>
         <name>4</name>
-        <value>-99.000000000</value>
+        <value>-138.600006104</value>
     </SliderFloat_4>
     <SliderInt_data_step>
         <name>data_step</name>
@@ -59,4 +59,28 @@
         <name>floor_range</name>
         <value>0.392499983</value>
     </SliderFloat_floor_range>
+    <SliderFloat_pc_x>
+        <name>pc_x</name>
+        <value>-0.010000005</value>
+    </SliderFloat_pc_x>
+    <SliderFloat_pc_y>
+        <name>pc_y</name>
+        <value>-0.016000003</value>
+    </SliderFloat_pc_y>
+    <SliderFloat_pc_z>
+        <name>pc_z</name>
+        <value>0.004999995</value>
+    </SliderFloat_pc_z>
+    <SliderFloat_rc_x>
+        <name>rc_x</name>
+        <value>-8.549999237</value>
+    </SliderFloat_rc_x>
+    <SliderFloat_rc_y>
+        <name>rc_y</name>
+        <value>-1.349998474</value>
+    </SliderFloat_rc_y>
+    <SliderFloat_rc_z>
+        <name>rc_z</name>
+        <value>-1.349998474</value>
+    </SliderFloat_rc_z>
 </controls>

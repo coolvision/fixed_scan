@@ -84,9 +84,9 @@ void ofApp::setup() {
 	gui.addSlider("pc_x", pc.x, -0.1f, 0.1f);
     gui.addSlider("pc_y", pc.y, -0.1f, 0.1f);
 	gui.addSlider("pc_z", pc.z, -0.1f, 0.1f);
-	gui.addSlider("rc_x", rc.x, -30.0f, 30.0f);
-    gui.addSlider("rc_y", rc.y, -30.0f, 30.0f);
-	gui.addSlider("rc_z", rc.z, -30.0f, 30.0f);
+	gui.addSlider("rc_x", rc.x, -45.0f, 45.0f);
+    gui.addSlider("rc_y", rc.y, -45.0f, 45.0f);
+	gui.addSlider("rc_z", rc.z, -45.0f, 45.0f);
 
     gui.setAlignRight(false);
     gui.loadFromXML();
@@ -136,4 +136,6 @@ void ofApp::setup() {
     capture_frames = false;
     save_i = 0;
     frame_i = 0;
+
+    re_project= false;
 }

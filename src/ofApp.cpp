@@ -1,5 +1,21 @@
 #include "ofApp.h"
 
+void ofApp::reProject() {
+
+    // for all of the saved frames
+
+
+    // transform to the world coordinates using
+    // the calibrated camera transform
+
+
+    // and make updated "floor maps" out of it
+    
+    
+
+    
+}
+
 void ofApp::clearFloorMaps() {
 
     for (int i = 0; i < floor_maps.size(); i++) {
@@ -115,7 +131,6 @@ void ofApp::addFloorMap(DepthFrame *f) {
     ofMesh &mesh = m->mesh;
 	ofPoint local_points[2][2];
 	mesh.clear();
-
 
     ofColor color;
     int map_i = 0;
@@ -258,9 +273,12 @@ void ofApp::keyPressed (int key) {
             //camera_positions.clear();
 			break;
 
-//		case'p':
-//			bDrawPointCloud = !bDrawPointCloud;
-//			break;
+		case'p':
+			//bDrawPointCloud = !bDrawPointCloud;
+
+            re_project = true;
+
+			break;
 
 //		case 'w':
 //			kinect.enableDepthNearValueWhite(!kinect.isDepthNearValueWhite());

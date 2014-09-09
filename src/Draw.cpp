@@ -32,15 +32,32 @@ void ofApp::draw() {
     rotation.y = camera_tilt;
     rotation.z = 0.0f;
 
-
     // set the camera position
     // in the same way as the arm position is set
-    camera.resetTransform();
-    camera.pan(rotation.x);
-    camera.roll(-rotation.y);
-    camera.pan(rotation.z);
-    camera.move(position.x, position.y, position.z);
+    set_arm.resetTransform();
+    set_arm.pan(rotation.x);
+    set_arm.roll(-rotation.y);
+    set_arm.pan(rotation.z);
+    set_arm.move(position.x, position.y, position.z);
 
+    // kinect is rotated relative to the arm direction
+    // so rotate the camera to make it the same as kinect direction
+    set_kinect = set_arm;
+    set_kinect.tilt(90.0f);
+    set_kinect.roll(-90.0f);
+
+
+    calibrated_kinect.resetTransform();
+    // in the local coordinate system
+    calibrated_kinect.pan(rc.x);
+    calibrated_kinect.roll(rc.y);
+    calibrated_kinect.pan(rc.z);
+    calibrated_kinect.move(pc);
+    ofMatrix4x4 local = calibrated_kinect.getGlobalTransformMatrix();
+
+    // transform to the global coordinate system
+    ofMatrix4x4 global = set_kinect.getGlobalTransformMatrix();
+    calibrated_kinect.setTransformMatrix(local * global);
 
     // draw camera and target position
     ofDrawAxis(500);
@@ -49,22 +66,27 @@ void ofApp::draw() {
     ofSetColor(ofColor::white);
     ofDrawSphere(target, 0.005f);
     ofLine(position, target);
+
     // and camera rotation
-    camera.transformGL();
-    ofSetColor(ofColor::black);
-    ofDrawBox(0.1);
+    set_arm.transformGL();
+    ofSetColor(ofColor::red);
+    ofDrawCone(0.05, 0.2f);
 	ofDrawAxis(0.2);
-	camera.restoreTransformGL();
+	set_arm.restoreTransformGL();
 
-    // kinect is rotated relative to the arm direction
-    // so rotate the camera to make it the same as kinect direction
-    set_kinect = camera;
-    set_kinect.pan(90.0f);
+    set_kinect.transformGL();
+    ofSetColor(ofColor::black);
+    ofDrawCone(0.05, 0.2f);
+	ofDrawAxis(0.2);
+	set_kinect.restoreTransformGL();
 
-//    curr_f.setFromPixels(kinect.getDistancePixels());
-//    curr_f.setImage(kinect.getPixels());
-//    curr_f.vis_step = vis_step;
-//    curr_f.data.step = data_step;
+    calibrated_kinect.transformGL();
+    ofSetColor(ofColor::grey);
+    ofDrawCone(0.05, 0.2f);
+	ofDrawAxis(0.2);
+	calibrated_kinect.restoreTransformGL();
+
+
 
     avg_f.vis_step = vis_step;
     avg_f.data.step = data_step;
@@ -90,6 +112,11 @@ void ofApp::draw() {
             avg_f.updateWeightedDepth(kinect.getDistancePixels(), weight_a);
             avg_f.updateWeightedImage(kinect.getPixels(), weight_a);
         }
+
+        // make calibration transform matrix
+        CameraOptions calibrated = c_o;
+
+
         rangeToWorld(&c_o, &avg_f, true);
         avg_f.meshFromPoints(show_normals);
 
@@ -116,6 +143,10 @@ void ofApp::draw() {
         drawCorrespondence();
     }
 
+    if (re_project) {
+        re_project = false;
+        reProject();
+    }
 
 
 //==============================================================================

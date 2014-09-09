@@ -10,7 +10,9 @@
 #include "ofxRangeToWorld.h"
 
 
-#define SIDEBAR_WIDTH 232
+//#define SIDEBAR_WIDTH 232
+
+#define SIDEBAR_WIDTH 450
 
 class ofApp : public ofBaseApp {
 public:
@@ -48,6 +50,7 @@ public:
     vector<DepthFrame *> floor_maps; // corresponding "floor maps" for calibration
     void addFloorMap(DepthFrame *f);
     void drawFloorMaps();
+    void reProject();
     bool add_floor_map;
     bool clear_floor_maps;
     bool draw_correspondence;
@@ -62,8 +65,7 @@ public:
     ofPoint pc; // position
     ofPoint rc; // rotation
 
-    // calibrated camera position
-    ofCamera fixed_cam;
+    bool re_project;
 //==============================================================================
 
     string url;
@@ -81,8 +83,9 @@ public:
 	void mouseReleased(int x, int y, int button);
 	void windowResized(int w, int h);
 
-    ofCamera camera;
+    ofCamera set_arm;
     ofCamera set_kinect;
+    ofCamera calibrated_kinect;
 
 
     void drawVolume();
