@@ -2,91 +2,44 @@
 
 void ofApp::reProject() {
 
-    // for all of the saved frames
+    cout << "re-project" << endl;
 
-
-    // transform to the world coordinates using
-    // the calibrated camera transform
-
-
-    // and make updated "floor maps" out of it
-    
-    
-
-    
-}
-
-void ofApp::clearFloorMaps() {
-
+    // not relevant already
     for (int i = 0; i < floor_maps.size(); i++) {
         floor_maps[i]->releaseHost();
         delete floor_maps[i];
     }
     floor_maps.clear();
 
+    // for all of the saved frames
     for (int i = 0; i < saved_f.size(); i++) {
-        saved_f[i]->releaseHost();
-        delete saved_f[i];
-    }
-    saved_f.clear();
-}
 
-void ofApp::drawCorrespondence() {
+        // transform to the world coordinates using
+        // the calibrated camera transform
+//        ofMatrix4x4 local = calibrated_kinect.getGlobalTransformMatrix();
+//        ofMatrix4x4 global = saved_f[i]->camera.getGlobalTransformMatrix();
+        ofCamera set_calibrated;
+//        set_calibrated.setTransformMatrix(local * global);
+//
+        CameraOptions c = saved_f[i]->c;
+        set_calibrated = saved_f[i]->camera;
 
-    if (floor_maps.empty()) {
-        return;
-    }
-    DepthFrame *m = floor_maps.back();
+        memcpy(c.t, set_calibrated.getGlobalTransformMatrix().getPtr(),
+               16 * sizeof(float));
 
-    ofPoint offset = target - ofPoint(0.5f, 0.5f, 0.5f);
-    ofPoint p;
-    ofPoint p2;
-    for (int y = 0; y < m->data.height; y++) {
-		for (int x = 0; x < m->data.width; x++) {
+        // re-project using calibrated position
 
-            bool found_undefined = false;
+        //rangeToWorld(&(saved_f[i]->c), saved_f[i], true);
 
-            for (int i = 0; i < floor_maps.size(); i++) {
-                FrameData *d = &floor_maps[i]->data;
+        rangeToWorld(&c, saved_f[i], true);
+        saved_f[i]->meshFromPoints(show_normals);
 
-                p.y = d->depth[y * d->width + x];
-
-                if (p.y == -FLT_MAX) {
-                    found_undefined = true;
-                    break;
-                }
-                if (found_undefined) {
-                    break;
-                }
-            }
-
-            if (found_undefined) {
-                continue;
-            }
-
-            // all values are present
-            p.x = x * 0.005 + offset.x;
-            p.z = y * 0.005 + offset.z;
-
-            p2 = p;
-
-            ofSetColor(ofColor::white);
-            for (int i = 0; i < floor_maps.size()-1; i++) {
-                FrameData *d = &floor_maps[i]->data;
-                p2.y = d->depth[y * d->width + x];
-                ofLine(p, p2);
-            }
-
-
-        }
+        // and make updated "floor map" out of it
+        //addFloorMap(saved_f[i]);
     }
 }
 
 void ofApp::addFloorMap(DepthFrame *f) {
-
-    saved_f.push_back(new DepthFrame());
-    DepthFrame *s = saved_f.back();
-    s->cloneFrom(f);
 
     floor_maps.push_back(new DepthFrame());
     DepthFrame *m = floor_maps.back();
@@ -192,6 +145,73 @@ void ofApp::addFloorMap(DepthFrame *f) {
     }
 }
 
+void ofApp::clearFloorMaps() {
+
+    for (int i = 0; i < floor_maps.size(); i++) {
+        floor_maps[i]->releaseHost();
+        delete floor_maps[i];
+    }
+    floor_maps.clear();
+
+    for (int i = 0; i < saved_f.size(); i++) {
+        saved_f[i]->releaseHost();
+        delete saved_f[i];
+    }
+    saved_f.clear();
+}
+
+void ofApp::drawCorrespondence() {
+
+    if (floor_maps.empty()) {
+        return;
+    }
+    DepthFrame *m = floor_maps.back();
+
+    ofPoint offset = target - ofPoint(0.5f, 0.5f, 0.5f);
+    ofPoint p;
+    ofPoint p2;
+    for (int y = 0; y < m->data.height; y++) {
+		for (int x = 0; x < m->data.width; x++) {
+
+            bool found_undefined = false;
+
+            for (int i = 0; i < floor_maps.size(); i++) {
+                FrameData *d = &floor_maps[i]->data;
+
+                p.y = d->depth[y * d->width + x];
+
+                if (p.y == -FLT_MAX) {
+                    found_undefined = true;
+                    break;
+                }
+                if (found_undefined) {
+                    break;
+                }
+            }
+
+            if (found_undefined) {
+                continue;
+            }
+
+            // all values are present
+            p.x = x * 0.005 + offset.x;
+            p.z = y * 0.005 + offset.z;
+
+            p2 = p;
+
+            ofSetColor(ofColor::white);
+            for (int i = 0; i < floor_maps.size()-1; i++) {
+                FrameData *d = &floor_maps[i]->data;
+                p2.y = d->depth[y * d->width + x];
+                ofLine(p, p2);
+            }
+
+
+        }
+    }
+}
+
+
 void ofApp::drawFloorMaps() {
     for (int i = 0; i < floor_maps.size(); i++) {
         DepthFrame *m = floor_maps[i];
@@ -280,9 +300,9 @@ void ofApp::keyPressed (int key) {
 
 			break;
 
-//		case 'w':
-//			kinect.enableDepthNearValueWhite(!kinect.isDepthNearValueWhite());
-//			break;
+		case'a':
+            add_floor_map = true;
+			break;
 
 //		case 'o':
 //			kinect.setCameraTiltAngle(angle); // go back to prev tilt

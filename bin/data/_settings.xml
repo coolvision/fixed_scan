@@ -17,11 +17,11 @@
     </SliderFloat_2>
     <SliderFloat_3>
         <name>3</name>
-        <value>48.599990845</value>
+        <value>7.199996948</value>
     </SliderFloat_3>
     <SliderFloat_4>
         <name>4</name>
-        <value>-138.600006104</value>
+        <value>-126.000000000</value>
     </SliderFloat_4>
     <SliderInt_data_step>
         <name>data_step</name>
@@ -39,10 +39,6 @@
         <name>weight_a</name>
         <value>0.980000019</value>
     </SliderFloat_weight_a>
-    <Button_add_floor_map>
-        <name>add_floor_map</name>
-        <value>0</value>
-    </Button_add_floor_map>
     <Button_clear>
         <name>clear</name>
         <value>0</value>
@@ -61,11 +57,11 @@
     </SliderFloat_floor_range>
     <SliderFloat_pc_x>
         <name>pc_x</name>
-        <value>-0.010000005</value>
+        <value>-0.012999997</value>
     </SliderFloat_pc_x>
     <SliderFloat_pc_y>
         <name>pc_y</name>
-        <value>-0.016000003</value>
+        <value>0.098999999</value>
     </SliderFloat_pc_y>
     <SliderFloat_pc_z>
         <name>pc_z</name>

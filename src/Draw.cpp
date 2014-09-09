@@ -104,23 +104,23 @@ void ofApp::draw() {
 
     if (capture_frames) {
         if (frame_i == 0) {
-            cout << "avg_f.setFromPixels" << endl;
+            //cout << "avg_f.setFromPixels" << endl;
             avg_f.setFromPixels(kinect.getDistancePixels());
             avg_f.setImage(kinect.getPixels());
         } else {
-            cout << "updateWeightedDepth" << endl;
+            //cout << "updateWeightedDepth" << endl;
             avg_f.updateWeightedDepth(kinect.getDistancePixels(), weight_a);
             avg_f.updateWeightedImage(kinect.getPixels(), weight_a);
         }
 
         // make calibration transform matrix
-        CameraOptions calibrated = c_o;
-
+        // CameraOptions calibrated = c_o;
 
         rangeToWorld(&c_o, &avg_f, true);
         avg_f.meshFromPoints(show_normals);
 
         // save the camera position
+        avg_f.camera = set_kinect;
         avg_f.c = c_o;
 
         frame_i++;
@@ -130,7 +130,18 @@ void ofApp::draw() {
 
     // now, make a "floor map"
     if (add_floor_map) {
-        addFloorMap(&avg_f);
+
+        cout << "add_floor_map" << endl;
+
+        saved_f.push_back(new DepthFrame());
+        DepthFrame *s = saved_f.back();
+        s->cloneFrom(&avg_f);
+        //addFloorMap(&avg_f);
+
+//        cout << "camera0" << set_kinect.getGlobalTransformMatrix() << endl;
+//        cout << "camera1" << avg_f.camera.getGlobalTransformMatrix() << endl;
+//        cout << "camera2" << s->camera.getGlobalTransformMatrix() << endl;
+
         add_floor_map = false;
     }
     drawFloorMaps();

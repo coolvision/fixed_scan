@@ -74,7 +74,7 @@ void ofApp::setup() {
     gui.addSlider("weight_a", weight_a, 0.0f, 1.0f);
 
     gui.addTitle("calibration");
-    gui.addButton("add_floor_map", add_floor_map);
+//    gui.addButton("add_floor_map", add_floor_map);
     gui.addButton("clear", clear_floor_maps);
     gui.addToggle("draw_correspondence", draw_correspondence);
     gui.addSlider("floor_y", floor_y, -1.0f, 1.0f);
