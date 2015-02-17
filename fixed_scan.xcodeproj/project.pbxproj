@@ -14,16 +14,17 @@
 		250A95BA26587BE85DB0A353 /* ofxCvColorImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE9C7160245B19131DAE6128 /* ofxCvColorImage.cpp */; };
 		255A7B680DC81E543C875794 /* usb_libusb10.c in Sources */ = {isa = PBXBuildFile; fileRef = 28F9707464BA3FF98E05096C /* usb_libusb10.c */; };
 		49BEEB2DFA5319D55AA6899F /* tilt.c in Sources */ = {isa = PBXBuildFile; fileRef = BF2F2AA872288D30F53983EF /* tilt.c */; };
-		53079D1619A92BE200E63AE4 /* Update.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53079D1519A92BE200E63AE4 /* Update.cpp */; };
 		53079D1819A92BF000E63AE4 /* Draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53079D1719A92BF000E63AE4 /* Draw.cpp */; };
 		53079D1A19A92C0700E63AE4 /* Setup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53079D1919A92C0700E63AE4 /* Setup.cpp */; };
-		53079D9019AA4B1500E63AE4 /* DepthFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53079D8319AA4B1500E63AE4 /* DepthFrame.cpp */; };
-		53079D9119AA4B1500E63AE4 /* RangeToWorldCUDA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53079D8719AA4B1500E63AE4 /* RangeToWorldCUDA.cpp */; };
-		53079D9319AB549100E63AE4 /* RangeToWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53079D9219AB549100E63AE4 /* RangeToWorld.cpp */; };
 		53603CDF19955803002C0FE1 /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 53603CC719955803002C0FE1 /* libLeap.dylib */; };
 		53603CE019955803002C0FE1 /* Leap.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = 53603CCA19955803002C0FE1 /* Leap.lib */; };
 		53603CE119955803002C0FE1 /* Leapd.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = 53603CCC19955803002C0FE1 /* Leapd.lib */; };
 		53603CE219955803002C0FE1 /* ofxLeapMotion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53603CD619955803002C0FE1 /* ofxLeapMotion.cpp */; };
+		53782D1019EDFD9E00ECECE5 /* ConnectedComponents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53782D0F19EDFD9E00ECECE5 /* ConnectedComponents.cpp */; };
+		538C4D6519CC7048008AC861 /* FloorMaps.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 538C4D6419CC7048008AC861 /* FloorMaps.cpp */; };
+		538C4D6719CC7090008AC861 /* Calibration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 538C4D6619CC7090008AC861 /* Calibration.cpp */; };
+		538C4D6E19CC73C2008AC861 /* DepthFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 538C4D6919CC73C2008AC861 /* DepthFrame.cpp */; };
+		538C4D6F19CC73C2008AC861 /* RangeToWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 538C4D6D19CC73C2008AC861 /* RangeToWorld.cpp */; };
 		53BFAA4D196F4A9800588E0F /* ofxMSAInteractiveObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53BFAA19196F4A9800588E0F /* ofxMSAInteractiveObject.cpp */; };
 		53BFAA50196F4A9800588E0F /* ofxSimpleGuiButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53BFAA29196F4A9800588E0F /* ofxSimpleGuiButton.cpp */; };
 		53BFAA51196F4A9800588E0F /* ofxSimpleGuiColorPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53BFAA2B196F4A9800588E0F /* ofxSimpleGuiColorPicker.cpp */; };
@@ -45,6 +46,7 @@
 		53BFAA6A196F4AE000588E0F /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53BFAA64196F4AE000588E0F /* tinyxmlparser.cpp */; };
 		53BFAA6B196F4AE000588E0F /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53BFAA66196F4AE000588E0F /* ofxXmlSettings.cpp */; };
 		53CBF5261971F2D300AE2D23 /* ofxGrabCam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53CBF5241971F2D300AE2D23 /* ofxGrabCam.cpp */; };
+		53EEE7DA19BF9FD800A55756 /* Correspondence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53EEE7D919BF9FD800A55756 /* Correspondence.cpp */; };
 		63020F16C7E8DED980111241 /* ofxCvImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C6151136D101F857DAE12722 /* ofxCvImage.cpp */; };
 		686B0DF6249B52E1A85B39EC /* ofxKinect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ED9FFC7D08DA194C2CE7D09 /* ofxKinect.cpp */; };
 		7ADB04AF67C568EAFAEBA546 /* ofxKinectExtras.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01438542609FC64F1EC60EEB /* ofxKinectExtras.cpp */; };
@@ -137,20 +139,8 @@
 		45F38573A0B0DEEC8BBC7A2C /* simplex_downhill.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = simplex_downhill.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/simplex_downhill.h; sourceTree = SOURCE_ROOT; };
 		49EFFCF36CF194CCE0E1FAAB /* kdtree_index.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = kdtree_index.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/kdtree_index.h; sourceTree = SOURCE_ROOT; };
 		516717F84C0146512C47A3EC /* ofxCvHaarFinder.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxCvHaarFinder.h; path = ../../../addons/ofxOpenCv/src/ofxCvHaarFinder.h; sourceTree = SOURCE_ROOT; };
-		53079D1519A92BE200E63AE4 /* Update.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Update.cpp; sourceTree = "<group>"; };
 		53079D1719A92BF000E63AE4 /* Draw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Draw.cpp; sourceTree = "<group>"; };
 		53079D1919A92C0700E63AE4 /* Setup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Setup.cpp; sourceTree = "<group>"; };
-		53079D1C19AA4B1400E63AE4 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		53079D7F19AA4B1500E63AE4 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		53079D8019AA4B1500E63AE4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		53079D8319AA4B1500E63AE4 /* DepthFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DepthFrame.cpp; sourceTree = "<group>"; };
-		53079D8419AA4B1500E63AE4 /* DepthFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DepthFrame.h; sourceTree = "<group>"; };
-		53079D8519AA4B1500E63AE4 /* FrameData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FrameData.h; sourceTree = "<group>"; };
-		53079D8719AA4B1500E63AE4 /* RangeToWorldCUDA.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RangeToWorldCUDA.cpp; sourceTree = "<group>"; };
-		53079D8819AA4B1500E63AE4 /* ofxRangeToWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxRangeToWorld.h; sourceTree = "<group>"; };
-		53079D9219AB549100E63AE4 /* RangeToWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RangeToWorld.cpp; sourceTree = "<group>"; };
-		53079D9619AB935B00E63AE4 /* Common.cuh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Common.cuh; sourceTree = "<group>"; };
-		53079D9719AB935B00E63AE4 /* RangeToWorld.cu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RangeToWorld.cu; sourceTree = "<group>"; };
 		53603CBF19955803002C0FE1 /* Leap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Leap.h; sourceTree = "<group>"; };
 		53603CC019955803002C0FE1 /* LeapMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeapMath.h; sourceTree = "<group>"; };
 		53603CC319955803002C0FE1 /* libLeap.so */ = {isa = PBXFileReference; lastKnownFileType = file; path = libLeap.so; sourceTree = "<group>"; };
@@ -168,6 +158,14 @@
 		53603CD219955803002C0FE1 /* version.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = version.txt; sourceTree = "<group>"; };
 		53603CD619955803002C0FE1 /* ofxLeapMotion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxLeapMotion.cpp; sourceTree = "<group>"; };
 		53603CD719955803002C0FE1 /* ofxLeapMotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxLeapMotion.h; sourceTree = "<group>"; };
+		53782D0F19EDFD9E00ECECE5 /* ConnectedComponents.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConnectedComponents.cpp; sourceTree = "<group>"; };
+		538C4D6419CC7048008AC861 /* FloorMaps.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FloorMaps.cpp; sourceTree = "<group>"; };
+		538C4D6619CC7090008AC861 /* Calibration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Calibration.cpp; sourceTree = "<group>"; };
+		538C4D6919CC73C2008AC861 /* DepthFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DepthFrame.cpp; sourceTree = "<group>"; };
+		538C4D6A19CC73C2008AC861 /* DepthFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DepthFrame.h; sourceTree = "<group>"; };
+		538C4D6B19CC73C2008AC861 /* FrameData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FrameData.h; sourceTree = "<group>"; };
+		538C4D6C19CC73C2008AC861 /* ofxRangeToWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxRangeToWorld.h; sourceTree = "<group>"; };
+		538C4D6D19CC73C2008AC861 /* RangeToWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RangeToWorld.cpp; sourceTree = "<group>"; };
 		53BFAA0F196F4A9800588E0F /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		53BFAA16196F4A9800588E0F /* license.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = license.md; sourceTree = "<group>"; };
 		53BFAA17196F4A9800588E0F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
@@ -219,6 +217,7 @@
 		53CBF5221971F2D300AE2D23 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		53CBF5241971F2D300AE2D23 /* ofxGrabCam.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxGrabCam.cpp; sourceTree = "<group>"; };
 		53CBF5251971F2D300AE2D23 /* ofxGrabCam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxGrabCam.h; sourceTree = "<group>"; };
+		53EEE7D919BF9FD800A55756 /* Correspondence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Correspondence.cpp; sourceTree = "<group>"; };
 		586A8EC141BDFA82B3B0518C /* config.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = config.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/config.h; sourceTree = SOURCE_ROOT; };
 		59626D03C690200AD4E8B3A6 /* ml.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ml.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/ml/ml.hpp; sourceTree = SOURCE_ROOT; };
 		5A59183C98FC5E69FC90F138 /* contrib.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = contrib.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/contrib/contrib.hpp; sourceTree = SOURCE_ROOT; };
@@ -514,41 +513,6 @@
 			name = gpu;
 			sourceTree = "<group>";
 		};
-		53079D1B19AA4B1400E63AE4 /* ofxRangeToWorld */ = {
-			isa = PBXGroup;
-			children = (
-				53079D1C19AA4B1400E63AE4 /* .gitignore */,
-				53079D7F19AA4B1500E63AE4 /* LICENSE */,
-				53079D8019AA4B1500E63AE4 /* README.md */,
-				53079D8119AA4B1500E63AE4 /* src */,
-			);
-			name = ofxRangeToWorld;
-			path = ../../../addons/ofxRangeToWorld;
-			sourceTree = "<group>";
-		};
-		53079D8119AA4B1500E63AE4 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				53079D9519AB935B00E63AE4 /* CUDA */,
-				53079D8319AA4B1500E63AE4 /* DepthFrame.cpp */,
-				53079D8419AA4B1500E63AE4 /* DepthFrame.h */,
-				53079D8519AA4B1500E63AE4 /* FrameData.h */,
-				53079D8719AA4B1500E63AE4 /* RangeToWorldCUDA.cpp */,
-				53079D8819AA4B1500E63AE4 /* ofxRangeToWorld.h */,
-				53079D9219AB549100E63AE4 /* RangeToWorld.cpp */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		53079D9519AB935B00E63AE4 /* CUDA */ = {
-			isa = PBXGroup;
-			children = (
-				53079D9619AB935B00E63AE4 /* Common.cuh */,
-				53079D9719AB935B00E63AE4 /* RangeToWorld.cu */,
-			);
-			path = CUDA;
-			sourceTree = "<group>";
-		};
 		53603C9119955802002C0FE1 /* ofxLeapMotion */ = {
 			isa = PBXGroup;
 			children = (
@@ -636,6 +600,18 @@
 				53603CD719955803002C0FE1 /* ofxLeapMotion.h */,
 			);
 			path = src;
+			sourceTree = "<group>";
+		};
+		538C4D6819CC73C2008AC861 /* RangeToWorld */ = {
+			isa = PBXGroup;
+			children = (
+				538C4D6919CC73C2008AC861 /* DepthFrame.cpp */,
+				538C4D6A19CC73C2008AC861 /* DepthFrame.h */,
+				538C4D6B19CC73C2008AC861 /* FrameData.h */,
+				538C4D6C19CC73C2008AC861 /* ofxRangeToWorld.h */,
+				538C4D6D19CC73C2008AC861 /* RangeToWorld.cpp */,
+			);
+			path = RangeToWorld;
 			sourceTree = "<group>";
 		};
 		53BFAA0E196F4A9800588E0F /* ofxMSAInteractiveObject */ = {
@@ -887,7 +863,6 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
-				53079D1B19AA4B1400E63AE4 /* ofxRangeToWorld */,
 				53603C9119955802002C0FE1 /* ofxLeapMotion */,
 				53CBF5211971F2D300AE2D23 /* ofxGrabCam */,
 				53BFAA5F196F4AE000588E0F /* ofxXmlSettings */,
@@ -1011,12 +986,16 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				53782D0F19EDFD9E00ECECE5 /* ConnectedComponents.cpp */,
+				538C4D6819CC73C2008AC861 /* RangeToWorld */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
-				53079D1519A92BE200E63AE4 /* Update.cpp */,
 				53079D1719A92BF000E63AE4 /* Draw.cpp */,
 				53079D1919A92C0700E63AE4 /* Setup.cpp */,
+				53EEE7D919BF9FD800A55756 /* Correspondence.cpp */,
+				538C4D6419CC7048008AC861 /* FloorMaps.cpp */,
+				538C4D6619CC7090008AC861 /* Calibration.cpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -1182,23 +1161,23 @@
 				E55DEEF784A10419E444669E /* flags.c in Sources */,
 				53BFAA56196F4A9800588E0F /* ofxSimpleGuiQuadWarp.cpp in Sources */,
 				FCC16AB16073FF0581F50ED7 /* loader.c in Sources */,
+				538C4D6F19CC73C2008AC861 /* RangeToWorld.cpp in Sources */,
 				53BFAA69196F4AE000588E0F /* tinyxmlerror.cpp in Sources */,
 				53BFAA5C196F4A9800588E0F /* ofxSimpleGuiPage.cpp in Sources */,
-				53079D1619A92BE200E63AE4 /* Update.cpp in Sources */,
 				53CBF5261971F2D300AE2D23 /* ofxGrabCam.cpp in Sources */,
+				53782D1019EDFD9E00ECECE5 /* ConnectedComponents.cpp in Sources */,
+				538C4D6519CC7048008AC861 /* FloorMaps.cpp in Sources */,
 				53BFAA58196F4A9800588E0F /* ofxSimpleGuiTitle.cpp in Sources */,
 				21A059755481CC0BF969FD2D /* keep_alive.c in Sources */,
 				53BFAA57196F4A9800588E0F /* ofxSimpleGuiSlider2d.cpp in Sources */,
 				F4135EEFC911E9ED211FB6F9 /* core.c in Sources */,
 				255A7B680DC81E543C875794 /* usb_libusb10.c in Sources */,
+				538C4D6719CC7090008AC861 /* Calibration.cpp in Sources */,
 				ACE7DC9A3223ED5EE1B80074 /* cameras.c in Sources */,
 				53BFAA51196F4A9800588E0F /* ofxSimpleGuiColorPicker.cpp in Sources */,
 				49BEEB2DFA5319D55AA6899F /* tilt.c in Sources */,
-				53079D9319AB549100E63AE4 /* RangeToWorld.cpp in Sources */,
 				0F8F016776681D468C0D0949 /* audio.c in Sources */,
 				53BFAA5D196F4A9800588E0F /* ofxSimpleGuiToo.cpp in Sources */,
-				53079D9119AA4B1500E63AE4 /* RangeToWorldCUDA.cpp in Sources */,
-				53079D9019AA4B1500E63AE4 /* DepthFrame.cpp in Sources */,
 				53079D1819A92BF000E63AE4 /* Draw.cpp in Sources */,
 				63020F16C7E8DED980111241 /* ofxCvImage.cpp in Sources */,
 				53603CE219955803002C0FE1 /* ofxLeapMotion.cpp in Sources */,
@@ -1216,7 +1195,9 @@
 				53BFAA68196F4AE000588E0F /* tinyxml.cpp in Sources */,
 				53BFAA53196F4A9800588E0F /* ofxSimpleGuiContent.cpp in Sources */,
 				E212C821D1064B92DD953A42 /* ofxCvHaarFinder.cpp in Sources */,
+				538C4D6E19CC73C2008AC861 /* DepthFrame.cpp in Sources */,
 				53BFAA5E196F4A9800588E0F /* ofxSimpleGuiValueControl.cpp in Sources */,
+				53EEE7DA19BF9FD800A55756 /* Correspondence.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

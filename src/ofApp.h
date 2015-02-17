@@ -17,6 +17,17 @@
 class ofApp : public ofBaseApp {
 public:
 
+// depth image segmentation (connected components)
+//==============================================================================
+    short *depth_data;
+    int depth_data_size;
+    int img_width;
+    int img_height;
+    uint *labels;
+#define N_LABELS 1000
+    ofColor label_colors[N_LABELS];
+    void ConnectedComponents();
+    
 // camera position
 //==============================================================================
     // set from the ui
@@ -43,29 +54,66 @@ public:
     int save_i;
     float weight_a;
     bool show_normals;
+    bool show_avg;
+
 
 // calibration
 //==============================================================================
     vector<DepthFrame *> saved_f; // snapshots (averaged)
     vector<DepthFrame *> floor_maps; // corresponding "floor maps" for calibration
-    void addFloorMap(DepthFrame *f);
+
+    bool opt_parameter[6];
+
+    void addFloorMap(DepthFrame *f, bool make_mesh);
+
+    void reProject(bool make_mesh);
+
     void drawFloorMaps();
-    void reProject();
+    void saveMaps();
+    void loadMaps();
+
     bool add_floor_map;
     bool clear_floor_maps;
     bool draw_correspondence;
+    bool draw_plane;
+    bool draw_mesh;
     float floor_y;
     float floor_range;
+    bool plane_correspondence;
+
+    float max_depth;
 
     void clearFloorMaps();
-    void drawCorrespondence();
-    void findCorrespondence(); // between saved snapshots, using "floor maps"
+    float findCorrespondence(bool draw); // between saved snapshots, using "floor maps"
+    float planeCorrespondence(bool draw);
+    void gdStep();
+    void planeGDStep();
 
     // manual calibration
     ofPoint pc; // position
     ofPoint rc; // rotation
+    ofPoint kc;
+    bool reset_parameters;
 
     bool re_project;
+
+    // gradient descent
+    bool run_gd;
+    bool run_plane_gd;
+    float gd_alpha;
+    float gd_epsilon;
+
+    float ref_pix_size;
+    float ref_distance;
+
+    float x_curr[6]; // optimization parameters
+    float x_next[6]; // 2 samples to estimate gradient
+
+    float f_curr[6];
+    float f_next[6];
+
+    float grad[6]; // gradient value
+
 //==============================================================================
 
     string url;
@@ -86,6 +134,7 @@ public:
     ofCamera set_arm;
     ofCamera set_kinect;
     ofCamera calibrated_kinect;
+    ofCamera calibrated_kinect_local;
 
 
     void drawVolume();
@@ -106,7 +155,6 @@ public:
 	
 	// used for viewing the point cloud
 	ofEasyCam easyCam;
-
 
 // Leap Motion demo
 //==============================================================================

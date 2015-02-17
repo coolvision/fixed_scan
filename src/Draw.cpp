@@ -30,7 +30,7 @@ void ofApp::draw() {
     rotation.x = sp.z;
     //rotation.y = 90 + atan(sp.y / sp.x) * RAD_TO_DEG;
     rotation.y = camera_tilt;
-    rotation.z = 0.0f;
+    rotation.z = 180.0f;
 
     // set the camera position
     // in the same way as the arm position is set
@@ -43,19 +43,28 @@ void ofApp::draw() {
     // kinect is rotated relative to the arm direction
     // so rotate the camera to make it the same as kinect direction
     set_kinect = set_arm;
-    set_kinect.tilt(90.0f);
-    set_kinect.roll(-90.0f);
+
+//    set_kinect.tilt(kc`A.x);
+    set_kinect.pan(-90.0f);
+//    set_kinect.roll(kc.z);
+
+    //
 
 
-    calibrated_kinect.resetTransform();
+    calibrated_kinect_local.resetTransform();
     // in the local coordinate system
-    calibrated_kinect.pan(rc.x);
-    calibrated_kinect.roll(rc.y);
-    calibrated_kinect.pan(rc.z);
-    calibrated_kinect.move(pc);
-    ofMatrix4x4 local = calibrated_kinect.getGlobalTransformMatrix();
+//    calibrated_kinect_local.pan(rc.x);
+//    calibrated_kinect_local.roll(rc.y);
+//    calibrated_kinect_local.pan(rc.z);
+
+    calibrated_kinect_local.tilt(rc.x);
+    calibrated_kinect_local.pan(rc.y);
+    calibrated_kinect_local.roll(rc.z);
+
+    calibrated_kinect_local.move(pc);
 
     // transform to the global coordinate system
+    ofMatrix4x4 local = calibrated_kinect_local.getGlobalTransformMatrix();
     ofMatrix4x4 global = set_kinect.getGlobalTransformMatrix();
     calibrated_kinect.setTransformMatrix(local * global);
 
@@ -67,39 +76,32 @@ void ofApp::draw() {
     ofDrawSphere(target, 0.005f);
     ofLine(position, target);
 
+    ofPushMatrix();
+    ofTranslate(0.0f, floor_y, 0.0f);
+    ofDrawGrid(1.0f, 16.0f, false, false, true, false);
+    ofPopMatrix();
+
     // and camera rotation
     set_arm.transformGL();
     ofSetColor(ofColor::red);
-    ofDrawCone(0.05, 0.2f);
+    ofDrawCone(0.05, 0.05f);
 	ofDrawAxis(0.2);
 	set_arm.restoreTransformGL();
 
-    set_kinect.transformGL();
-    ofSetColor(ofColor::black);
-    ofDrawCone(0.05, 0.2f);
-	ofDrawAxis(0.2);
-	set_kinect.restoreTransformGL();
+//    set_kinect.transformGL();
+//    ofSetColor(ofColor::black);
+//    ofDrawCone(0.05, 0.05f);
+//	ofDrawAxis(0.2);
+//	set_kinect.restoreTransformGL();
 
     calibrated_kinect.transformGL();
     ofSetColor(ofColor::grey);
-    ofDrawCone(0.05, 0.2f);
+    ofDrawCone(0.05, 0.05f);
 	ofDrawAxis(0.2);
 	calibrated_kinect.restoreTransformGL();
 
-
-
     avg_f.vis_step = vis_step;
     avg_f.data.step = data_step;
-
-    // fill in the camera option
-    if (kinect.isConnected()) {
-        memcpy(c_o.t, set_kinect.getGlobalTransformMatrix().getPtr(),
-               16 * sizeof(float));
-    }
-
-    //rangeToWorld(&c_o, &curr_f, true);
-    //curr_f.meshFromPoints(true);
-    //curr_f.drawMesh();
 
 
     if (capture_frames) {
@@ -115,49 +117,96 @@ void ofApp::draw() {
 
         // make calibration transform matrix
         // CameraOptions calibrated = c_o;
-
-        rangeToWorld(&c_o, &avg_f, true);
-        avg_f.meshFromPoints(show_normals);
-
-        // save the camera position
-        avg_f.camera = set_kinect;
-        avg_f.c = c_o;
-
         frame_i++;
     }
-    avg_f.drawMesh();
+
+    // save the camera position
+    avg_f.camera = set_kinect;
+    memcpy(c_o.t, set_kinect.getGlobalTransformMatrix().getPtr(),
+           16 * sizeof(float));
+    avg_f.c = c_o;
 
 
     // now, make a "floor map"
     if (add_floor_map) {
 
-        cout << "add_floor_map" << endl;
-
         saved_f.push_back(new DepthFrame());
         DepthFrame *s = saved_f.back();
         s->cloneFrom(&avg_f);
-        //addFloorMap(&avg_f);
-
-//        cout << "camera0" << set_kinect.getGlobalTransformMatrix() << endl;
-//        cout << "camera1" << avg_f.camera.getGlobalTransformMatrix() << endl;
-//        cout << "camera2" << s->camera.getGlobalTransformMatrix() << endl;
+        addFloorMap(&avg_f, true);
 
         add_floor_map = false;
     }
-    drawFloorMaps();
+
+
+    if (show_avg) {
+        CameraOptions calibrated = c_o;
+        memcpy(calibrated.t, calibrated_kinect.getGlobalTransformMatrix().getPtr(),
+               16 * sizeof(float));
+        rangeToWorld(&calibrated, &avg_f, true, max_depth);
+        avg_f.meshFromPoints(show_normals);
+        avg_f.drawMesh();
+    }
+
+
+    if (kinect.isConnected()) {
+        for (int i = 0; i < saved_f.size(); i++) {
+            DepthFrame *m = saved_f[i];
+            m->c.ref_distance = kinect.getZeroPlaneDistance() + ref_distance;
+            m->c.ref_pix_size = kinect.getZeroPlanePixelSize() + ref_pix_size;
+        }
+    }
+
+    if (draw_plane) {
+        drawFloorMaps();
+    }
+    if (draw_mesh) {
+        for (int i = 0; i < saved_f.size(); i++) {
+            DepthFrame *m = saved_f[i];
+            m->mesh.drawFaces();
+        }
+    }
 
     if (clear_floor_maps) {
         clearFloorMaps();
         clear_floor_maps = false;
     }
     if (draw_correspondence) {
-        drawCorrespondence();
+        findCorrespondence(true);
     }
 
     if (re_project) {
         re_project = false;
-        reProject();
+        reProject(true);
     }
+
+    if (reset_parameters) {
+        reset_parameters = false;
+        rc.set(0.0f, 0.0f, 0.0f);
+        pc.set(0.0f, 0.0f, 0.0f);
+        for (int i = 0; i < 6; i++) {
+            x_curr[i] = FLT_MAX;
+            x_next[i] = FLT_MAX;
+            f_curr[i] = FLT_MAX;
+            f_next[i] = FLT_MAX;
+        }
+    }
+
+    if (run_gd) {
+        gdStep();
+        //run_gd = false;
+    }
+    if (run_plane_gd) {
+        planeGDStep();
+        //run_plane_gd = false;
+    }
+    if (plane_correspondence) {
+        float f = planeCorrespondence(true);
+        plane_correspondence = false;
+        cout << "plane " << f << endl;
+        findCorrespondence(false);
+    }
+
 
 
 //==============================================================================
@@ -165,12 +214,53 @@ void ofApp::draw() {
 
 	ofViewport(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
 
-    if(!bDrawPointCloud) {
-        kinect.drawDepth(SIDEBAR_WIDTH, 100, 400, 300);
-    }
     ofSetColor(ofColor::gray);
     ofRect(0, 0, SIDEBAR_WIDTH, ofGetWindowHeight());
     gui.draw();
+
+    if (kinect.isConnected()) {
+
+        // get the kinect depth image
+        memcpy(depth_data, kinect.getRawDepthPixels(), depth_data_size);
+
+        ConnectedComponents();
+
+        // find which label is in the center
+        int center_x = ((img_width/2) / data_step) * data_step;
+        int center_y = ((img_height/2) / data_step) * data_step;
+        int center_label = labels[center_y * img_width + center_x];
+
+        float w = 200;
+        float h = 150;
+
+        // draw the depth data
+        int step = data_step * vis_step;
+        for (int i = 0; i < img_height; i+=step) {
+            for (int j = 0; j < img_width; j+=step) {
+                //ofSetColor(depth_data[i * img_width + j] / 10);
+                int l = labels[i * img_width + j];
+                if (l > 0 && l < N_LABELS) {
+                    ofSetColor(label_colors[labels[i * img_width + j]]);
+                } else {
+                    ofSetColor(ofColor::white);
+                }
+                if (center_label != 0 && l == center_label) {
+                    ofSetColor(ofColor::red);
+                }
+                ofRect(ofGetWindowWidth() - w + j/step, h + 50 + i/step,
+                                1, 1);
+            }
+        }
+
+        ofSetColor(ofColor::white);
+        kinect.drawDepth(ofGetWindowWidth() - w, 50, w, h);
+
+        ofSetColor(ofColor::red);
+        ofLine(ofGetWindowWidth() - w, 50 + h/2, ofGetWindowWidth(), 50 + h/2);
+        ofLine(ofGetWindowWidth() - w + w/2, 50, ofGetWindowWidth() - w + w/2, 50 + h/2);
+    }
+
+
 }
 
 void ofApp::drawVolume() {

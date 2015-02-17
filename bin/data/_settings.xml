@@ -1,27 +1,27 @@
 <controls>
     <SliderFloat_target_x>
         <name>target_x</name>
-        <value>0.669999957</value>
+        <value>-0.329999983</value>
     </SliderFloat_target_x>
     <SliderFloat_target_y>
         <name>target_y</name>
-        <value>-0.029999971</value>
+        <value>0.610000014</value>
     </SliderFloat_target_y>
     <SliderFloat_1>
         <name>1</name>
-        <value>0.992500067</value>
+        <value>0.137500048</value>
     </SliderFloat_1>
     <SliderFloat_2>
         <name>2</name>
-        <value>0.395000011</value>
+        <value>0.264999986</value>
     </SliderFloat_2>
     <SliderFloat_3>
         <name>3</name>
-        <value>7.199996948</value>
+        <value>-23.399993896</value>
     </SliderFloat_3>
     <SliderFloat_4>
         <name>4</name>
-        <value>-126.000000000</value>
+        <value>117.000000000</value>
     </SliderFloat_4>
     <SliderInt_data_step>
         <name>data_step</name>
@@ -29,15 +29,19 @@
     </SliderInt_data_step>
     <SliderInt_vis_step>
         <name>vis_step</name>
-        <value>2</value>
+        <value>3</value>
     </SliderInt_vis_step>
     <Toggle_show_normals>
         <name>show_normals</name>
-        <value>1</value>
+        <value>0</value>
     </Toggle_show_normals>
+    <Toggle_show_avg>
+        <name>show_avg</name>
+        <value>1</value>
+    </Toggle_show_avg>
     <SliderFloat_weight_a>
         <name>weight_a</name>
-        <value>0.980000019</value>
+        <value>0.959999979</value>
     </SliderFloat_weight_a>
     <Button_clear>
         <name>clear</name>
@@ -45,38 +49,98 @@
     </Button_clear>
     <Toggle_draw_correspondence>
         <name>draw_correspondence</name>
-        <value>1</value>
+        <value>0</value>
     </Toggle_draw_correspondence>
-    <SliderFloat_floor_y>
-        <name>floor_y</name>
+    <Toggle_draw_plane>
+        <name>draw_plane</name>
+        <value>0</value>
+    </Toggle_draw_plane>
+    <Toggle_draw_mesh>
+        <name>draw_mesh</name>
+        <value>1</value>
+    </Toggle_draw_mesh>
+    <SliderFloat_max_depth>
+        <name>max_depth</name>
+        <value>691.000000000</value>
+    </SliderFloat_max_depth>
+    <Button_plane_correspondence>
+        <name>plane_correspondence</name>
+        <value>0</value>
+    </Button_plane_correspondence>
+    <SliderFloat_ref_pix_size>
+        <name>ref_pix_size</name>
         <value>0.000000000</value>
-    </SliderFloat_floor_y>
-    <SliderFloat_floor_range>
-        <name>floor_range</name>
-        <value>0.392499983</value>
-    </SliderFloat_floor_range>
+    </SliderFloat_ref_pix_size>
+    <SliderFloat_ref_distance>
+        <name>ref_distance</name>
+        <value>0.000000000</value>
+    </SliderFloat_ref_distance>
+    <Button_reset_parameters>
+        <name>reset_parameters</name>
+        <value>0</value>
+    </Button_reset_parameters>
     <SliderFloat_pc_x>
         <name>pc_x</name>
-        <value>-0.012999997</value>
+        <value>0.047789659</value>
     </SliderFloat_pc_x>
     <SliderFloat_pc_y>
         <name>pc_y</name>
-        <value>0.098999999</value>
+        <value>0.020075740</value>
     </SliderFloat_pc_y>
     <SliderFloat_pc_z>
         <name>pc_z</name>
-        <value>0.004999995</value>
+        <value>-0.022126315</value>
     </SliderFloat_pc_z>
     <SliderFloat_rc_x>
         <name>rc_x</name>
-        <value>-8.549999237</value>
+        <value>1.945995927</value>
     </SliderFloat_rc_x>
     <SliderFloat_rc_y>
         <name>rc_y</name>
-        <value>-1.349998474</value>
+        <value>-43.200000763</value>
     </SliderFloat_rc_y>
     <SliderFloat_rc_z>
         <name>rc_z</name>
-        <value>-1.349998474</value>
+        <value>-2.675123692</value>
     </SliderFloat_rc_z>
+    <SliderFloat_gd_alpha>
+        <name>gd_alpha</name>
+        <value>0.215785012</value>
+    </SliderFloat_gd_alpha>
+    <SliderFloat_gd_epsilon>
+        <name>gd_epsilon</name>
+        <value>0.049599998</value>
+    </SliderFloat_gd_epsilon>
+    <Toggle_run_gd>
+        <name>run_gd</name>
+        <value>0</value>
+    </Toggle_run_gd>
+    <Toggle_run_plane_gd>
+        <name>run_plane_gd</name>
+        <value>0</value>
+    </Toggle_run_plane_gd>
+    <Toggle_opt_parameter_0>
+        <name>opt_parameter_0</name>
+        <value>1</value>
+    </Toggle_opt_parameter_0>
+    <Toggle_opt_parameter_1>
+        <name>opt_parameter_1</name>
+        <value>1</value>
+    </Toggle_opt_parameter_1>
+    <Toggle_opt_parameter_2>
+        <name>opt_parameter_2</name>
+        <value>1</value>
+    </Toggle_opt_parameter_2>
+    <Toggle_opt_parameter_3>
+        <name>opt_parameter_3</name>
+        <value>1</value>
+    </Toggle_opt_parameter_3>
+    <Toggle_opt_parameter_4>
+        <name>opt_parameter_4</name>
+        <value>1</value>
+    </Toggle_opt_parameter_4>
+    <Toggle_opt_parameter_5>
+        <name>opt_parameter_5</name>
+        <value>1</value>
+    </Toggle_opt_parameter_5>
 </controls>
